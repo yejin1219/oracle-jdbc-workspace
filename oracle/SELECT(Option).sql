@@ -110,25 +110,39 @@ WHERE D.DEPARTMENT_NO = (SELECT D.DEPARTMENT_NO
                          JOIN TB_STUDENT S ON(D.DEPARTMENT_NO = S.DEPARTMENT_NO)
                          WHERE STUDENT_NAME = '최경희');
 
+
 --17. 국어국문학과에서 총 평점이 가장 높은 학생의 이름과 학번을 표시하는 SQL 문을 작성하시오
---오류
-SELECT SUM(POINT)
-FROM TB_GRADE
-GROUP BY STUDENT_NO;
-
-
-
 
 
 SELECT S.STUDENT_NAME, S.STUDENT_NO
 FROM TB_STUDENT S 
 JOIN TB_DEPARTMENT D ON(S.DEPARTMENT_NO = D.DEPARTMENT_NO)
 JOIN TB_GRADE G ON(S.STUDENT_NO = G.STUDENT_NO)
-WHERE DEPARTMENT_NAME = '국어국문학과'
+WHERE DEPARTMENT_NAME = '국어국문학과' 
 GROUP BY S.STUDENT_NAME, S.STUDENT_NO
-HAVING SUM(G.GRADE);
+HAVING  AVG(G.POINT)= (SELECT MAX(AVG(G.POINT))
+                       FROM TB_GRADE G
+                       JOIN TB_STUDENT S ON(G.STUDENT_NO = S.STUDENT_NO)
+                       JOIN TB_DEPARTMENT D ON(S.DEPARTMENT_NO = D.DEPARTMENT_NO)
+                       WHERE D.DEPARTMENT_NAME = '국어국문학과'
+                       GROUP BY G.STUDENT_NO);
+
+
 
 
 --18. 춘 기술대학교의 “환경조경학과”가 속한 같은 계열 학과들의 학과 별 전공과목 평점을 파악하
 --기 위한 적절한 SQL 문을 찾아내시오. 단, 출력헤더는 “계열 학과명”, “전공평점”으로 표시되도록
 --하고, 평점은 소수점 한 자리까지만 반올림하여 표시되도록 한다
+
+SELECT DEPARTMENT_NAME "계열 학과명", ROUND(AVG(POINT),1) "전공평점"
+FROM TB_DEPARTMENT D
+JOIN TB_CLASS C ON(D.DEPARTMENT_NO = C.DEPARTMENT_NO)
+JOIN TB_GRADE G ON(C.CLASS_NO = G.CLASS_NO)
+WHERE CATEGORY = (SELECT CATEGORY
+FROM TB_DEPARTMENT
+WHERE DEPARTMENT_NAME = '환경조경학과')
+GROUP BY DEPARTMENT_NAME;
+
+
+
+
