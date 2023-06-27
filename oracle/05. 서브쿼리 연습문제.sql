@@ -1,7 +1,28 @@
  
  --1.보너스 포함한 연봉이 높은 5명의 사번, 이름, 부서명, 직급, 입사일, 순위 조회
+
+ SELECT EMP_ID, EMP_NAME, DEPT_TITLE, JOB_NAME, HIRE_DATE, ROWNUM
+ FROM  (SELECT EMP_ID, EMP_NAME, DEPT_TITLE, JOB_NAME, HIRE_DATE, (SALARY + NVL(BONUS,0)*SALARY)*12 
+          FROM EMPLOYEE E
+          JOIN DEPARTMENT D ON(E.DEPT_CODE = D.DEPT_ID)
+          JOIN JOB USING(JOB_CODE)
+          ORDER BY 6 DESC)
+ WHERE ROWNUM <=5;
+ 
+ 
  
  --2.부서별 급여 합계가 전체 급여 총 합의 20%보다 많은 부서의 부서명, 부서별 급여 합계 조회
 --(방법은 여러 가지..! 가급적으로 서브쿼리 사용해보세요!
+SELECT DEPT_TITLE, SUM(SALARY)
+FROM EMPLOYEE E
+JOIN DEPARTMENT D ON(E.DEPT_CODE = D.DEPT_ID)
+GROUP BY DEPT_TITLE
+HAVING SUM(SALARY) > (SELECT SUM(SALARY)
+                       FROM EMPLOYEE)*0.2;
+
 
 --3. WITH을 이용하여 급여 합과 급여 평균 조회
+WITH ALL_SALARY AS (SELECT SUM(SALARY) "SUM_SALARY", AVG(SALARY)"AVG_SARARY"
+                    FROM EMPLOYEE)
+SELECT SUM_SALARY,AVG_SARARY
+FROM ALL_SALARY;
