@@ -7,7 +7,6 @@
    
    * 오라클에서 객체(구조) : 테이블(TABLE), 뷰(VIEW), 시퀀스(SEQUENCE), 인덱스(INDEX), 패키지(PACKAGE),
                           트리거(TRIGGER), 프로시저(PROCEDURE), 함수(FUNCTION), 동의어(SYNONYM), 사용자(USER)
- 
  */
  
  
@@ -645,5 +644,23 @@ WHERE M.MEMBER_NO = 1;
       제 2정규화 : 주 식별자에 종속되지 않는 속성을 분리
       제 3정규화 : 속성에 종속적인 속성을 제거 
 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
