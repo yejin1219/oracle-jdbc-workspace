@@ -32,7 +32,7 @@ public class DBConnectionTest2 {
 			PreparedStatement st = conn.prepareStatement(query);
 			
 			// 4. 쿼리문 실행
-			st.setInt(1, 2); // 위치
+			st.setInt(1, 2); 
 			st.setString(2, "김예진");
 			
 			
