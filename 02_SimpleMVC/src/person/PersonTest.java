@@ -58,6 +58,8 @@ public class PersonTest {
 		if(result == 1) {
 			System.out.println(name + "님, 추가!");
 		}
+		
+		closeAll(conn,st);
 	}
 	
 	 
