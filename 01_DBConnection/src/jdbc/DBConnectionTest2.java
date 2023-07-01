@@ -33,7 +33,7 @@ public class DBConnectionTest2 {
 			
 			// 4. 쿼리문 실행
 			st.setInt(1, 2); 
-			st.setString(2, "김예진");
+			st.setString(2, "김미경");
 			
 			
 			int result = st.executeUpdate();
