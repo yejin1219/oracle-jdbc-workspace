@@ -10,7 +10,7 @@
     1. 시퀀스 객체 생성
     
     [표현법]
-    CREATE SEQUENCE 시퀀스명
+      CREATE SEQUENCE 시퀀스명
     [START WITH 시작숫자]     --> 처음 발생시킬 시작값 지정(기본값 1)
     [INCREMENT BY 숫자]      --> 몇 씩 증가시킬 건지 (기본값 1)
     [MAXVALUE 숫자]          --> 최대값 지정(기본값 무진장 큼)
@@ -124,7 +124,8 @@ CREATE TABLE PERSON(
 );
 CREATE SEQUENCE SEQ_PERSON;
   
-SELECT * FROM PERSON;  
+SELECT * FROM PERSON; 
+SELECT * FROM EMP;
   
   
   
