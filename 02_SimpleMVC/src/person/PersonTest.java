@@ -92,9 +92,9 @@ public class PersonTest {
 		st.setInt(2,id);
 		
 		int result = st.executeUpdate();
-		if(result == 1) {
-			System.out.println("id" + id +"인 사람 주소 변경!");
-		}
+		
+		System.out.println("id" + id +"인 사람 주소 변경!");
+		
        closeAll(conn,st);
 	}
 	
@@ -106,7 +106,7 @@ public class PersonTest {
 	    PreparedStatement st = conn.prepareStatement(p.getProperty("searchAllPerson"));
 	
 	   
-	   ResultSet rs = st.executeQuery();
+	   ResultSet rs = st.executeQuery(); 
 	    
 	    	  
 	 		while(rs.next()) {
@@ -131,17 +131,13 @@ public class PersonTest {
 		Connection conn = getConnect();
 		PreparedStatement st = conn.prepareStatement(p.getProperty("viewPerson"));
 		st.setInt(1, id);
-		 ResultSet rs = st.executeQuery();
+		
+		 ResultSet rs = st.executeQuery(); // select문에서는 executeQuery(); , 그 외에 것에선 executeUpdate(); 쓰면됨
+		                                   // 위에서 setInt를 썼다고 executeUpdate(); 쓰는 것은 아님 
 		    
    	  
 	 		while(rs.next()) {
-	 			String personId = rs.getString("id");
-	 			String personName = rs.getString("name");
-	 			String personAddress = rs.getString("address");
-	 			
-	 			
-	 		
-	 			System.out.println(personId + "/" + personName + "/" + personAddress );
+	         System.out.println(rs.getString("name") + "/" + rs.getString("address") );
 	    	    
 	   
 	   }
@@ -164,10 +160,10 @@ public class PersonTest {
 			//pt.addPerson("강태주","경기도");
 			
 			
-			pt.searchAllPerson();
+			//pt.searchAllPerson();
 			//pt.removePerson(3); //강태주 삭제
 			//pt.updatePerson(1, "제주도");
-			//pt.viewPerson(1);
+			pt.viewPerson(1);
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
