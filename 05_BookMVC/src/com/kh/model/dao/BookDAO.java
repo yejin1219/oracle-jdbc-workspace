@@ -135,16 +135,19 @@ public class BookDAO implements BookDAOTemplate{
 		// UPDATE - STATUS를 Y로!
 		// status가 n이면 회원 유지, y면 회원 탈뢰
 		// n이 기본값 <-- 회원유지
-		Connection conn = getConnect();
-		PreparedStatement st = conn.prepareStatement(p.getProperty("deleteMember"));
-		
-		if(login(id,password) !=null && login(id,password).getStatus() == 'y') {
+		int result = 0;
+		if(login(id,password) !=null && login(id,password).getStatus() == 'n') {				
+			return 0;
+		}else if(login(id,password) !=null && login(id,password).getStatus() == 'y') {
 			
+			Connection conn = getConnect();
+			PreparedStatement st = conn.prepareStatement(p.getProperty("deleteMember"));
 			st.setInt(1,login(id,password).getMemberNo());
+			closeAll(st,conn);
+	        result = st.executeUpdate();
 		}
-		 closeAll(st,conn);
-         int result = st.executeUpdate();
 		return result;
+
 	}
 
 
@@ -180,7 +183,8 @@ public class BookDAO implements BookDAOTemplate{
 		
 		// while문 안에서! Rent rent = new Rent();
 		//setter사용
-		//rest.setBook(new Book(rs.getString("bk_title"),rs.getString("bk_author")));
+		//rent.setBook(new Book(rs.getString("bk_title"),rs.getString("bk_author")));
+		
 		Connection conn = getConnect();
 		PreparedStatement st = conn.prepareStatement(p.getProperty("printRentBook"));
 		st.setString(1, id);
@@ -191,11 +195,14 @@ public class BookDAO implements BookDAOTemplate{
 		ArrayList<Rent> rentlist = new ArrayList();
 		
 		while(rs.next()) {
-			Rent rent = null;
-			rentlist.add(new Rent(rest.setBook(new Book(rs.getString("bk_title"),rs.getString("bk_author")))));
+			Rent rent = new Rent();
+			rent.setBook(new Book(rs.getString("bk_title"), rs.getString("bk_author")));
+			rent.setRentNo(rs.getInt("rent_no"));
+			rent.setRentDate(rs.getDate("rent_date"));
+			rentlist.add(rent);
 		}
 		closeAll(rs,st,conn);
-		return null;
+		return rentlist;
 	}
 
 	

@@ -8,6 +8,10 @@ public class Rent {
 	private Member member; 
 	private Book book;
 	private Date rentDate;
+
+	public Rent() {
+		
+	}
 	public int getRentNo() {
 		return rentNo;
 	}
@@ -36,6 +40,9 @@ public class Rent {
 	public String toString() {
 		return "Rent [rentNo=" + rentNo + ", member=" + member + ", book=" + book + ", rentDate=" + rentDate + "]";
 	}
+	public void setBook(int no) {
+	}
+	
 	
 	
 }
