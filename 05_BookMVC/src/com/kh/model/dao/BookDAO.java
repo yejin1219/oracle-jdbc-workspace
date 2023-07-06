@@ -59,14 +59,14 @@ public class BookDAO implements BookDAOTemplate{
 		//rs.getString("bk_title");
 		Connection conn = getConnect();
 		PreparedStatement st = conn.prepareStatement(p.getProperty("printBookAll"));
-		ArrayList <Book> booklist = new ArrayList();
 		ResultSet rs = st.executeQuery();
 		
-		while(rs.next()) {
-			booklist.add(new Book(rs.getString("bk_title"),rs.getString("bk_author")));
-			
-		}
+		ArrayList <Book> booklist = new ArrayList();
 		
+		while(rs.next()) {
+			booklist.add(new Book(rs.getInt("bk_no"),rs.getString("bk_title"),rs.getString("bk_author")));			
+		}
+		closeAll(rs,st,conn);
 		return booklist;
 	}
 
@@ -102,7 +102,7 @@ public class BookDAO implements BookDAOTemplate{
 		Connection conn = getConnect();
 		PreparedStatement st = conn.prepareStatement(p.getProperty("registerMember"));
 		st.setString(1, member.getMemberId());
-		st.setString(2,member.getMemberPwd());
+		st.setString(2, member.getMemberPwd());
 		st.setString(3, member.getMemberName());
 		int result = st.executeUpdate();
 		
@@ -123,9 +123,18 @@ public class BookDAO implements BookDAOTemplate{
 		
 		Member m = null;
 		if(rs.next()) {
+//			m.setMemberNo(rs.getInt("member_no"));
+//			m.setMemberId(rs.getString("member_id"));
+//			m.setMemberPwd(rs.getString("member_pwd"));
+//			m.setMemberName(rs.getString("member_name"));
+//			m.setStatus(rs.getString("status").charAt(0));
+//			m.setEnrollDate(rs.getDate("enroll_date"));
+//			        또는 ↓
+			
 			m = new Member(rs.getInt("member_no"),rs.getString("member_id"),rs.getString("member_pwd")  ,rs.getString("member_name"),
 					         rs.getString("status").charAt(0), rs.getDate("enroll_date") );
 		}
+		closeAll(rs,st,conn);
 		
 		return m;
 	}
@@ -135,17 +144,15 @@ public class BookDAO implements BookDAOTemplate{
 		// UPDATE - STATUS를 Y로!
 		// status가 n이면 회원 유지, y면 회원 탈뢰
 		// n이 기본값 <-- 회원유지
-		int result = 0;
-		if(login(id,password) !=null && login(id,password).getStatus() == 'n') {				
-			return 0;
-		}else if(login(id,password) !=null && login(id,password).getStatus() == 'y') {
-			
+		
 			Connection conn = getConnect();
 			PreparedStatement st = conn.prepareStatement(p.getProperty("deleteMember"));
-			st.setInt(1,login(id,password).getMemberNo());
-			closeAll(st,conn);
-	        result = st.executeUpdate();
-		}
+			st.setString(1, id);
+			st.setString(2, password);
+			
+			
+	      int  result = st.executeUpdate();
+	        closeAll(st,conn);
 		return result;
 
 	}
@@ -157,7 +164,8 @@ public class BookDAO implements BookDAOTemplate{
 		// 책 대여 기능@ INSERT ~~ TB_RENT
 		Connection conn = getConnect();
 		PreparedStatement st = conn.prepareStatement(p.getProperty("rentBook"));
-		st.setInt(1, rent.getRentNo());
+		st.setInt(1,rent.getMember().getMemberNo() ); 
+		st.setInt(2, rent.getBook().getBkNo());
 		int result = st.executeUpdate();
 		closeAll(st,conn);
 		return result;
@@ -192,7 +200,7 @@ public class BookDAO implements BookDAOTemplate{
 		ResultSet rs = st.executeQuery();
 		
 		
-		ArrayList<Rent> rentlist = new ArrayList();
+		ArrayList<Rent> rentlist = new ArrayList<>();
 		
 		while(rs.next()) {
 			Rent rent = new Rent();

@@ -68,21 +68,13 @@ public class BookController {
 	}
 	
 	public Member login(String id, String password) {
-		
 		try {
-			if(dao.login(id, password)!= null) {
-				
-				member.setMemberNo(dao.login(id, password).getMemberNo());
-				member.setMemberId(dao.login(id, password).getMemberId());
-				member.setMemberPwd(dao.login(id, password).getMemberPwd());
-				member.setMemberName(dao.login(id, password).getMemberName());
-				member.setStatus(dao.login(id, password).getStatus());
-				member.setEnrollDate(dao.login(id, password).getEnrollDate());
-			}
-	
-		} catch (SQLException e) {
-			e.printStackTrace();
+			member = dao.login(id, password);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
+	
+	
 		return member;
 	}
 	
@@ -101,14 +93,10 @@ public class BookController {
 	}
 	
 	public boolean rentBook(int no) {
-	  Rent rent = new Rent();
-	  Book book = new Book();
-	  book.setBkNo(no);
-	  rent.setBook(book);
-		
+
 		
 		try {
-			if(dao.rentBook(rent)==1) {
+			if(dao.rentBook(new Rent(new Member(member.getMemberNo()), new Book(no)))==1) {
 				return true;
 			}
 		} catch (SQLException e) {
@@ -134,9 +122,9 @@ public class BookController {
 	public ArrayList<Rent> printRentBook(){
 		
 		try {
-			if(dao.printRentBook(member.getMemberId()) != null) {
+			
 				return dao.printRentBook(member.getMemberId());
-			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -22,7 +22,7 @@ public class Member {
 	
 
 	 public Member(int memberNo, String memberId, String memberPwd, String memberName, char status, Date enrollDate) {
-			super();
+			
 			this.memberNo = memberNo;
 			this.memberId = memberId;
 			this.memberPwd = memberPwd;
@@ -34,7 +34,14 @@ public class Member {
 
 	
 	public Member(String id, String password, String name) {
-		
+		this.memberId = id;
+		this.memberPwd = password;
+		this.memberName = name;
+	}
+
+
+	public Member(int memberNo) {
+		this.memberNo = memberNo;
 	}
 
 
