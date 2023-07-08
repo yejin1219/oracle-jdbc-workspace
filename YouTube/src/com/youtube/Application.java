@@ -24,8 +24,9 @@ public class Application {
 		
 		//app.deleteChannel();
 		//app.myChannel();
-		app.addVideo();
-		
+		//app.addVideo();
+//		app.updateVideo();
+		app.videoAllList();
 	}
 	
 	//회원가입
@@ -73,7 +74,7 @@ public class Application {
 		System.out.print("채널명 : ");
 		String title = sc.nextLine();
 		Channel channel = new Channel();
-		channel.setChanelName(title);
+		channel.setChannelName(title);
 		if(yc.addChannel(channel)) {
 			System.out.println("채널이 추가되었습니다.");
 		}else {
@@ -84,11 +85,11 @@ public class Application {
 	}
 	
 	public void updateChannel() { //UPDATE CHANNEL SET CHANNEL_NAME = ? WHERE CHANNEL_CODE = ?
-		yc.login("user1", "1234");
+		yc.login("111", "1111");
 		System.out.print("변경할 채널명 : ");
 		String title = sc.nextLine();
 	    Channel channel = new Channel();
-	    channel.setChanelName(title);
+	    channel.setChannelName(title);
 	    if(yc.updateChannel(channel)) {
 	    	System.out.println("채널이 변경되었습니다.");
 	    }else {
@@ -112,7 +113,7 @@ public class Application {
 		yc.login("111", "1111");
 		
 		Channel channel = yc.myChannel();
-		System.out.println(channel.getChannelCode() + "/" +  channel.getMember().getMemberNickname() +"/" + channel.getChanelName() );
+		System.out.println(channel.getChannelCode() + "/" +  channel.getMember().getMemberNickname() +"/" + channel.getChannelName() );
 	}
 	
 	
@@ -146,4 +147,39 @@ public class Application {
 			}
 				
 	}
+	
+	public void videoAllList() {//콘솔 창에 아무것도 안뜸
+		
+		for(Video video : yc.videoAllList()) {
+			
+				System.out.println(video.getVideoCode() + " / " + video.getVideoPhoto() + " / " + video.getVideoTitle() + " / " + video.getChannel().getChannelPhoto()
+									+ " / " + video.getChannel().getChannelName() + " / " + video.getVideoViews());
+			
+		}
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	public void updateVideo() {//
+		yc.login("111", "1111");
+		System.out.print("변경할 비디오 :  ");
+		String title = sc.nextLine();
+		Video video = new Video();
+		video.setVideoTitle(title);
+		
+		if(yc.updateVideo(video)) {
+			System.out.println("비디오 업데이트 완료!");
+		}else {
+			System.out.println("비디오 업데이트 실패!");
+		}
+	}
+	
 }

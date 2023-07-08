@@ -112,6 +112,31 @@ public class YouTubeController {
 		}
 
 	
+	public ArrayList<Video> videoAllList() {
+		try {
+			return videoDao.videoAllList();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	public boolean updateVideo(Video video) {//
+		myChannel();
+		video.setChannel(this.channel);
+		video.setMember(this.member);
+		try {
+			if(videoDao.updateVideo(video) == 1) return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} return false;
+	}
+	
 	
 	
 }

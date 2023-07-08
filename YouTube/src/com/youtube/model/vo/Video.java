@@ -6,12 +6,11 @@ public class Video {
 
 	private int videoCode;
 	private String videoTitle;
-	private String videoPhoto;
 	private String videoDesc;
 	private Date videoDate;
 	private int videoViews;
 	private String videoUrl;
-	private int categoryCode;
+	private String videoPhoto;
 	
 	private Category category;
 	private Channel channel;
@@ -20,7 +19,7 @@ public class Video {
 		
 	}
 	public Video(int videoCode, String videoTitle, String videoPhoto, String videoDesc, Date videoDate, int videoViews,
-			String videoUrl, int categoryCode, Category category, Channel channel, Member member) {
+			String videoUrl, Category category, Channel channel, Member member) {
 		super();
 		this.videoCode = videoCode;
 		this.videoTitle = videoTitle;
@@ -29,7 +28,6 @@ public class Video {
 		this.videoDate = videoDate;
 		this.videoViews = videoViews;
 		this.videoUrl = videoUrl;
-		this.categoryCode = categoryCode;
 		this.category = category;
 		this.channel = channel;
 		this.member = member;
@@ -76,12 +74,7 @@ public class Video {
 	public void setVideoUrl(String videoUrl) {
 		this.videoUrl = videoUrl;
 	}
-	public int getCategoryCode() {
-		return categoryCode;
-	}
-	public void setCategoryCode(int categoryCode) {
-		this.categoryCode = categoryCode;
-	}
+	
 	public Category getCategory() {
 		return category;
 	}
@@ -104,7 +97,7 @@ public class Video {
 	public String toString() {
 		return "Video [videoCode=" + videoCode + ", videoTitle=" + videoTitle + ", videoPhoto=" + videoPhoto
 				+ ", videoDesc=" + videoDesc + ", videoDate=" + videoDate + ", videoViews=" + videoViews + ", videoUrl="
-				+ videoUrl + ", categoryCode=" + categoryCode + ", category=" + category + ", channel=" + channel
+				+ videoUrl + ", category=" + category + ", channel=" + channel
 				+ ", member=" + member + "]";
 	}
 	

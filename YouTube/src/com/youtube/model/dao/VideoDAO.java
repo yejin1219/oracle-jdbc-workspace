@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import config.ServerInfo;
 import com.youtube.model.vo.Category;
+import com.youtube.model.vo.Channel;
 import com.youtube.model.vo.Video;
 
 public class VideoDAO implements VideoDAOTemplate{
@@ -54,7 +55,7 @@ public class VideoDAO implements VideoDAOTemplate{
 		st.setString(1, video.getVideoTitle());
 		st.setString(2, video.getVideoUrl());
 		st.setString(3, video.getVideoPhoto());
-		st.setInt(4, video.getCategoryCode());
+		st.setInt(4, video.getCategory().getCategoryCode());
 		st.setInt(5, video.getChannel().getChannelCode());
 		st.setString(6, video.getMember().getMemberId());
 		
@@ -91,7 +92,28 @@ public class VideoDAO implements VideoDAOTemplate{
 
 	@Override
 	public ArrayList<Video> videoAllList() throws SQLException {
-		return null;
+		Connection conn = getConnect();
+		PreparedStatement st = conn.prepareStatement(p.getProperty("videoAllList"));
+		ResultSet rs = st.executeQuery();
+		
+		ArrayList<Video> videolist = new ArrayList();
+		while(rs.next()) {
+			Video video = new Video();
+			video.setVideoCode(rs.getInt("video_code"));
+			video.setVideoPhoto(rs.getString("video_photo"));
+			video.setVideoViews(rs.getInt("video_views"));
+			video.setVideoDate(rs.getDate("video_date"));
+			video.setVideoTitle(rs.getString("video_title"));
+			
+			Channel channel = new Channel();
+			channel.setChannelName(rs.getString("channel_name"));
+			channel.setChannelPhoto(rs.getString("channel_photo"));
+			video.setChannel(channel);
+			videolist.add(video);
+
+		}
+		closeAll(rs,st,conn);
+		return videolist;
 	}
 
 	@Override

@@ -6,7 +6,8 @@ import java.util.Date;
 public class Channel {
 
 	private int channelCode;
-	private String chanelName;
+	private String channelName;
+	private String channelPhoto;
 	private String channelDesc;
 	private Date channelDate;
 	
@@ -16,10 +17,11 @@ public class Channel {
 	public Channel() {
 		
 	}
-	public Channel(int channelCode, String chanelName, String channelDesc, Date channelDate, Member member) {
+	public Channel(int channelCode, String channelName, String channelPhotp,String channelDesc, Date channelDate, Member member) {
 		
 		this.channelCode = channelCode;
-		this.chanelName = chanelName;
+		this.channelName = channelName;
+		this.channelPhoto = channelPhoto;
 		this.channelDesc = channelDesc;
 		this.channelDate = channelDate;
 		this.member = member;
@@ -30,11 +32,17 @@ public class Channel {
 	public void setChannelCode(int channelCode) {
 		this.channelCode = channelCode;
 	}
-	public String getChanelName() {
-		return chanelName;
+	public String getChannelName() {
+		return channelName;
 	}
-	public void setChanelName(String chanelName) {
-		this.chanelName = chanelName;
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
+	}
+	public String getChannelPhoto() {
+		return channelPhoto;
+	}
+	public void setChannelPhoto(String channelPhoto) {
+		this.channelPhoto = channelPhoto;
 	}
 	public String getChannelDesc() {
 		return channelDesc;
@@ -56,9 +64,11 @@ public class Channel {
 	}
 	@Override
 	public String toString() {
-		return "Channel [channelCode=" + channelCode + ", chanelName=" + chanelName + ", channelDesc=" + channelDesc
-				+ ", channelDate=" + channelDate + ", member=" + member + "]";
+		return "Channel [channelCode=" + channelCode + ", channelName=" + channelName + ", channelPhoto=" + channelPhoto
+				+ ", channelDesc=" + channelDesc + ", channelDate=" + channelDate + ", member=" + member + "]";
 	}
+	
+	
 	
 	
 	
