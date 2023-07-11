@@ -79,12 +79,11 @@ public class YouTubeController {
 	public Channel myChannel() {
 		
 		try {
-			System.out.println(member);
-			channel = channelDao.myChannel(member.getMemberId());
-			return channel;
+			channel = channelDao.myChannel(this.member.getMemberId());
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} return null;
+		}
+		return channel;
 		
 			
 	}
@@ -121,15 +120,20 @@ public class YouTubeController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	public boolean updateVideo(Video video) {//
+	public ArrayList<Video> channelVideoList(){
 		myChannel();
-		video.setChannel(this.channel);
-		video.setMember(this.member);
+		try {
+			return videoDao.channelVideoList(this.channel.getChannelCode());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} return null;
+	}
+	
+	
+	
+	
+	public boolean updateVideo(Video video) {
+
 		try {
 			if(videoDao.updateVideo(video) == 1) return true;
 		} catch (SQLException e) {
@@ -137,7 +141,14 @@ public class YouTubeController {
 		} return false;
 	}
 	
-	
+	public boolean deleteVideo(int videoCode) {
+		try {
+			if(videoDao.deleteVideo(videoCode)==1) return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		return false;
+	}
 	
 }
 
