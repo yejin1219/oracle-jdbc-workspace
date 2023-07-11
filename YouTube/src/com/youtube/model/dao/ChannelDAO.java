@@ -53,7 +53,7 @@ public class ChannelDAO implements ChannelDAOTemplate {
 		
 		Connection conn = getConnect();
 		PreparedStatement st = conn.prepareStatement(p.getProperty("addChannel"));
-		st.setString(1, channel.getChanelName());
+		st.setString(1, channel.getChannelName());
 		st.setString(2, channel.getMember().getMemberId());
 		int result = st.executeUpdate();
 		
@@ -66,7 +66,7 @@ public class ChannelDAO implements ChannelDAOTemplate {
 		Connection conn = getConnect();
 		PreparedStatement st = conn.prepareStatement(p.getProperty("updateChannel"));
 		
-		st.setString(1, channel.getChanelName());
+		st.setString(1, channel.getChannelName());
 		st.setInt(2, channel.getChannelCode());
 		
 		int result = st.executeUpdate();
@@ -85,7 +85,7 @@ public class ChannelDAO implements ChannelDAOTemplate {
 
 	@Override
 	public Channel myChannel(String memberId) throws SQLException {
-		
+		//myChannel = SELECT CHANNEL_CODE, CHANNEL_NAME, MEMBER_NICKNAME FROM CHANNEL JOIN MEMBER USING(MEMBER_ID) WHERE MEMBER_ID = ?
 		Connection conn = getConnect();
 		PreparedStatement st = conn.prepareStatement(p.getProperty("myChannel"));
 		st.setString(1,memberId);
@@ -95,7 +95,7 @@ public class ChannelDAO implements ChannelDAOTemplate {
 		if(rs.next()) {
 			channel = new Channel();
 			channel.setChannelCode(rs.getInt("channel_code"));
-			channel.setChanelName(rs.getString("channel_name"));	
+			channel.setChannelName(rs.getString("channel_name"));	
 			
 			Member member = new Member();
 			
