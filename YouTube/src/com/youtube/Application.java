@@ -19,14 +19,14 @@ public class Application {
 		Application app = new Application();
 //		app.register();
 		//app.login();
-		//app.addChannel();
+//		app.addChannel();
 		//app.updateChannel();
 		
 		//app.deleteChannel();
-		//app.myChannel();
+		app.myChannel();
 		//app.addVideo();
 //		app.updateVideo();
-		app.videoAllList();
+//		app.videoAllList();
 	}
 	
 	//회원가입
@@ -109,7 +109,7 @@ public class Application {
 		}
 	}
 	
-	public void myChannel() {
+	public void myChannel() { //채널이 하나밖에 안보이는것인가..?
 		yc.login("111", "1111");
 		
 		Channel channel = yc.myChannel();
@@ -148,7 +148,7 @@ public class Application {
 				
 	}
 	
-	public void videoAllList() {//콘솔 창에 아무것도 안뜸
+	public void videoAllList() {
 		
 		for(Video video : yc.videoAllList()) {
 			
@@ -161,19 +161,24 @@ public class Application {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	public void updateVideo() {//
+	public void channelVideoList() {
 		yc.login("111", "1111");
-		System.out.print("변경할 비디오 :  ");
-		String title = sc.nextLine();
+		for(Video video : yc.channelVideoList()) {
+			System.out.println(video.getVideoCode() + " / " + video.getVideoPhoto() + " / " + video.getVideoTitle() + " / " + video.getChannel().getChannelPhoto()
+					+ " / " + video.getChannel().getChannelName() + " / " + video.getVideoViews());
+		}
+	}
+	
+	
+	public void updateVideo() {
+		channelVideoList();
+		System.out.print("수정하고자 하는 비디오 선택 : ");
+		int videoCode = Integer.parseInt(sc.nextLine());
+		System.out.print("비디오 수정할 제목 : ");
+		String updateTitle = sc.nextLine();
 		Video video = new Video();
-		video.setVideoTitle(title);
+		video.setVideoCode(videoCode);
+		video.setVideoTitle(updateTitle);
 		
 		if(yc.updateVideo(video)) {
 			System.out.println("비디오 업데이트 완료!");
@@ -182,4 +187,19 @@ public class Application {
 		}
 	}
 	
+	
+    public void deleteVideo() {
+		
+		channelVideoList();
+		
+		System.out.print("삭제하고자 하는 비디오 선택 : ");
+		int videoCode = Integer.parseInt(sc.nextLine());
+		
+		if(yc.deleteVideo(videoCode)) {
+			System.out.println("비디오 삭제 성공!");
+		} else {
+			System.out.println("비디오 삭제 실패 ㅠㅠ");
+		}
+		
+	}
 }
