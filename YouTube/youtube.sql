@@ -260,7 +260,10 @@ FROM CHANNEL JOIN MEMBER USING(ID)
 WHERE ID='111';
 
 
+------------------------------
+truncate table video cascade;
 
+select * from video;
 
 
 
