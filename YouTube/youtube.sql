@@ -265,6 +265,9 @@ truncate table video cascade;
 
 select * from video;
 
+truncate table channel cascade;
+select * from channel;
+
 
 
 
